@@ -5,77 +5,75 @@
 typedef struct Node
 {
     int val;
-    struct Node* left;
-    struct Node* right;
+    struct Node *left;
+    struct Node *right;
 }BST_Node;
 
-//Creating a Node
-BST_Node* CreateNode(int val)
+//Function to create a node
+BST_Node* Createnode(int val)
 {
-    BST_Node *newnode = (BST_Node*)malloc(sizeof(struct Node));
+    BST_Node *newnode = (BST_Node*)malloc(sizeof(BST_Node));
     newnode->val = val;
     newnode->left = newnode->right = NULL;
     return newnode;
 }
-
-//Insearting a node
-BST_Node* InseartNode(BST_Node* root,int val)
+//Function to inseart a node
+BST_Node* InseartNode(BST_Node *root,int val)
 {
     if(root == NULL)
     {
-        root = CreateNode(val);
+        root = Createnode(val);
     }
-    else if (val<=root->val) 
+    else if (val <= root->val) 
     {
         root->left = InseartNode(root->left, val);
     }
-    else 
+    else
     {
         root->right = InseartNode(root->right, val);
     }
     return root;
 }
-//Search Node
-int SearchNode(BST_Node *root,int val)
+//Search the value in BST
+
+int Search(BST_Node *root,int val)
 {
     if(root == NULL)
     {
         return 0;
     }
-    else if (root->val == val) 
+    else if(root->val == val)
     {
         return 1;
     }
-    else if (root->val > val) 
+    else if (root->val >= val)
     {
-        return SearchNode(root->left, val);
+        return Search(root->left,val);
     }
     else 
     {
-        return SearchNode(root->right, val);
+        return Search(root->right,val);
     }
 }
 
 int main()
 {
-    int a[]={15,56,20,1,13,2,4,8,9,5,6,41},len,val;
+    int a[]={8,7,9,5,4,6,2,5,8,9,3,1,15},len,val;
     len = sizeof(a)/sizeof(int);
-
-    BST_Node* root = NULL;
+    BST_Node *root = NULL;
     for(int i=0;i<len;i++)
     {
         root = InseartNode(root, a[i]);
     }
+    printf("Enter the Number to search = ");
+    scanf("%d",&val);
 
-    printf("Enter the value to search = ");
-    scanf_s("%d",&val);
-    if(SearchNode(root,  val) == 1)
+    if(Search(root, val) == 1)
     {
-        printf("Value Found");
+        printf("Found");
     }
     else 
     {
-        printf("Value not Found");
+        printf("Not Found");
     }
-
 }
