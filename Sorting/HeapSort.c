@@ -1,68 +1,66 @@
 #include <stdio.h>
 
-//swap
-void swap(int *a, int *b)
+//Swap
+void Swap(int *a,int *b)
 {
-    *a = *a ^ *b;
-    *b = *a ^ *b;
-    *a = *a ^ *b;
+    int temp = *a;
+    *a = *b;
+    *b = temp;
 }
 
-//Heapify the array -> Max Heap
-
-void MaxHeap(int a[],int len, int i)
+//Max Heap Function
+void Heapify(int a[],int len,int i)
 {
-    int largest = i;
-    int l = 2*i+1;
-    int r = 2*i+2;
+    int large = i;
+    int l = 2*i+1 , r=2*i+2 ;
 
-    if(l<len && a[l]>a[largest])
+    if(l<len && a[large] < a[l])
     {
-        largest = l;
+        large = l;
     }
-    if(r<len && a[r]>a[largest])
+    if(r<len && a[large] < a[r])
     {
-        largest = r;
+        large = r;
     }
-
-    if(i!=largest)
+    if(large != i)
     {
-        swap(&a[largest], &a[i]);
-        MaxHeap(a, len, largest);
+        Swap(&a[i], &a[large]);
+        Heapify(a, len, large);
     }
 }
-
-//Heap Sort
-
-void HeapSort(int a[],int len)
+//HeapSort
+void Heapsort(int a[],int len)
 {
     for(int i=(len/2)-1;i>=0;i--)
     {
-        MaxHeap(a, len, i);
+        Heapify(a, len, i);
     }
-
     for(int i=len-1;i>0;i--)
     {
-        swap(&a[i], &a[0]);
-        MaxHeap(a, i, 0);
+        Swap(&a[i], &a[0]);
+        Heapify(a, i, 0);
     }
 }
 
-void Printarray(int a[],int len)
+//Utility
+void PrintArray(int a[],int len)
 {
     for(int i=0;i<len;i++)
     {
-        printf(" %d",a[i]);
+        printf("%d ",a[i]);
     }
 }
 
 int main()
 {
-    int a[]={6,8,7,9, 4, 5, 1, 2, 3, 6, 5, 2, 4, 7, 8, 9, 8, 4, 7, 1, 0, 2, 5, 8},len;
+    int a[]={8,7,5,4,2,9,4,7,3,5,16},len;
     len = sizeof(a)/sizeof(int);
-    printf("Before Heapsort\n");
-    Printarray(a, len);
-    HeapSort(a, len);
-    printf("\nAfter Heapsort\n");
-    Printarray(a, len);
+    printf("Before Swap\n");
+    PrintArray(a, len);
+    Heapsort(a, len);
+    printf("\nAfter Swap\n");
+    PrintArray(a, len);
+
+
+    return 0;
 }
